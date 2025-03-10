@@ -1,5 +1,6 @@
 import './App.css'
 import PaginaInicial from './components/PaginaInicial';
+import PaginaLogin from './components/PaginaLogin.jsx';
 
 function App() {
 
