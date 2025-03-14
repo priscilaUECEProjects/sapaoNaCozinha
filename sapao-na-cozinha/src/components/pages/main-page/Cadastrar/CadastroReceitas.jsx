@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function CadastroReceita() {
+export default function CadastroReceita({ alternarComponente }) {
     const [nomeReceita, setNomeReceita] = useState('');
     const [ingredientesReceita, setIngredientesReceita] = useState([]);
     const [ingredientesSelecionados, setIngredientesSelecionados] = useState([]);
@@ -68,10 +68,9 @@ export default function CadastroReceita() {
 
                     <div className="flex items-center justify-around w-full font-bold">
                         <button type="submit" className="p-2 border border-[#55133b] cursor-pointer rounded hover:bg-[#55133b] hover:text-[#F4F1E1]">Cadastrar</button>
-                        <div className="flex items-center hover:text-[#803c65]">
-                            <Link to='/cadastrar-ingredientes'>Ingredientes</Link>
-                            <span className="material-symbols-outlined">chevron_right</span>
-                        </div>
+
+                            <button type="button" onClick={() => alternarComponente("ingrediente")} className="flex items-center gap-1 cursor-pointer hover:text-[#803c65]">
+                                Ingredientes<span className="material-symbols-outlined">chevron_right</span></button>
                     </div>
                 </form>
             </div>
