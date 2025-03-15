@@ -93,7 +93,7 @@ export default function PaginaCadastro() {
 
                     <div className="flex items-center gap-5 justify-around w-full font-bold">
                         <button type="submit" className="mt-5 p-2 border-[1px] border-[#55133b] cursor-pointer rounded hover:bg-[#55133b] hover:text-[#F4F1E1]">Cadastrar</button>
-                        <Link to="/" className="text-[15px] mt-5 underline decoration-transparent hover:decoration-[#55133b] hover:underline">Já possui uma conta?</Link>
+                        <Link to="/login" className="text-[15px] mt-5 underline decoration-transparent hover:decoration-[#55133b] hover:underline">Já possui uma conta?</Link>
                     </div>
                 </form>
             </div>

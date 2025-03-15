@@ -1,28 +1,65 @@
 import logo from "../../../assets/img/logo.png";
 import { Link } from "react-scroll";
+import { useState, useEffect, useRef } from "react";
 
 export default function Header() {
+  const [visivel, setVisivel] = useState(true);
+  const ultimoScrollY = useRef(0); // Armazena o último scroll sem causar re-renderizações
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > ultimoScrollY.current) {
+        setVisivel(false); // Oculta o header ao descer
+      } else {
+        setVisivel(true); // Mostra o header ao subir
+      }
+      ultimoScrollY.current = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []); // O useEffect não depende de estados que causam re-render
+
   return (
-    <header className="bg-[var(--color-hunter-green)] py-4 px-6 flex justify-between items-center">
+    <header
+      className={`bg-[var(--color-hunter-green)] py-4 px-6 flex justify-between items-center fixed w-full top-0 transition-transform duration-300 ${
+        visivel ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="flex items-center gap-3">
         <img src={logo} alt="Logo do Site" className="w-15 h-15" />
-        <span className="text-2xl font-bold text-[#F4F1E1]">Sapão na Cozinha</span> 
+        <span className="text-2xl font-bold text-[#F4F1E1]">Sapão na Cozinha</span>
       </div>
 
       <nav>
-      <ul className="flex justify-around gap-4">
+        <ul className="flex justify-around gap-4">
           <li>
-            <Link to="inicio" smooth={true} duration={500} className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer">
+            <Link
+              to="inicio"
+              smooth={true}
+              duration={500}
+              className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer"
+            >
               Início
             </Link>
           </li>
           <li>
-            <Link to="cadastrar" smooth={true} duration={500} className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer">
+            <Link
+              to="cadastrar"
+              smooth={true}
+              duration={500}
+              className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer"
+            >
               Cadastrar
             </Link>
           </li>
           <li>
-            <Link to="receitas" smooth={true} duration={500} className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer">
+            <Link
+              to="receitas"
+              smooth={true}
+              duration={500}
+              className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer"
+            >
               Receitas
             </Link>
           </li>

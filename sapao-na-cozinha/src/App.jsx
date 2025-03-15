@@ -8,10 +8,8 @@ import PaginaLogin from './components/pages/PaginaLogin.jsx';
 function App() {
   return (
     <>
-      <div>
-        <MainPage />
-      </div>
         <Routes>
+          <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<PaginaLogin />} />
           <Route path="/cadastro" element={<PaginaCadastro />} />
         </Routes>
