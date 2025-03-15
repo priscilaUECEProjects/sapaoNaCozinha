@@ -43,7 +43,11 @@ export default function CadastroReceita({ alternarComponente }) {
 
                     <label htmlFor="nome-receita" className="font-bold text-2xl">Nome da receita:</label>
                     <input type="text" id="nome-receita" name="nome-receita" className="border border-[#55133b] text-3xl rounded"
-                    value={nomeReceita} onChange={(event) => setNomeReceita(event.target.value)} required/>                  
+                    value={nomeReceita} onChange={(event) => setNomeReceita(event.target.value)} required/>
+
+                    <label htmlFor="rendimento-receita" className="font-bold text-2xl">Rendimento da receita(g):</label>
+                    <input type="number" id="rendimento-receita" name="rendimento-receita" step="0.01" className="border border-[#55133b] text-3xl rounded
+                    [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"/>                  
 
                         <h2 className="text-bold">Ingredientes:</h2>
                         {ingredientesSelecionados.map((ingrediente, index) => (
@@ -65,6 +69,11 @@ export default function CadastroReceita({ alternarComponente }) {
                             </div>
                         ))}
                         <button type="button" onClick={adicionarIngrediente} className="border p-2 rounded cursor-pointer hover:bg-[#f3eed1]">Adicionar Ingredientes</button>
+
+                        <div className="flex flex-col gap-2 text-bold">
+
+                        </div>
+
 
                     <div className="flex items-center justify-around w-full font-bold">
                         <button type="submit" className="p-2 border border-[#55133b] cursor-pointer rounded hover:bg-[#55133b] hover:text-[#F4F1E1]">Cadastrar</button>
