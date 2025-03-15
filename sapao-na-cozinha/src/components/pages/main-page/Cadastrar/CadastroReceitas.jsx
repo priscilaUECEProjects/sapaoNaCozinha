@@ -49,7 +49,7 @@ export default function CadastroReceita({ alternarComponente }) {
                     <input type="number" id="rendimento-receita" name="rendimento-receita" step="0.01" className="border border-[#55133b] text-3xl rounded
                     [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"/>                  
 
-                        <h2 className="text-bold">Ingredientes:</h2>
+                        <h2 className="font-bold">Ingredientes:</h2>
                         {ingredientesSelecionados.map((ingrediente, index) => (
                             <div key={index} className="flex gap-2">
                                 <select
@@ -68,7 +68,7 @@ export default function CadastroReceita({ alternarComponente }) {
                                 <span className="material-symbols-outlined cursor-pointer hover:text-[#803c65]">delete</span></button>
                             </div>
                         ))}
-                        <button type="button" onClick={adicionarIngrediente} className="border p-2 rounded cursor-pointer hover:bg-[#f3eed1]">Adicionar Ingredientes</button>
+                        <button type="button" onClick={adicionarIngrediente} className="font-bold border p-2 rounded cursor-pointer hover:bg-[#f3eed1]">Adicionar Ingredientes</button>
 
                         <div className="flex flex-col gap-2 text-bold">
 
