@@ -4,21 +4,21 @@ import { useState, useEffect, useRef } from "react";
 
 export default function Header() {
   const [visivel, setVisivel] = useState(true);
-  const ultimoScrollY = useRef(0); // Armazena o último scroll sem causar re-renderizações
+  const ultimoScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > ultimoScrollY.current) {
-        setVisivel(false); // Oculta o header ao descer
+        setVisivel(false);
       } else {
-        setVisivel(true); // Mostra o header ao subir
+        setVisivel(true);
       }
       ultimoScrollY.current = window.scrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []); // O useEffect não depende de estados que causam re-render
+  }, []);
 
   return (
     <header
@@ -28,7 +28,7 @@ export default function Header() {
     >
       <div className="flex items-center gap-3">
         <img src={logo} alt="Logo do Site" className="w-15 h-15" />
-        <span className="text-2xl font-bold text-[#F4F1E1]">Sapão na Cozinha</span>
+        <span className="text-2xl font-bold text-[#F4F1E1] hidden sm:block ">Sapão na Cozinha</span>
       </div>
 
       <nav>
