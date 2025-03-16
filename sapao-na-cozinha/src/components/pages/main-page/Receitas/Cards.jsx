@@ -44,12 +44,12 @@ export default function Cards() {
   }
 
   return (
-    <div className="bg-hunter-green-ligther bg-[url('./assets/img/fundo-verde.png')] bg-repeat bg-[auto_500px] bg-[position:0%_-100%] min-h-screen grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full p-5 gap-3">
+    <div className="bg-hunter-green-ligther bg-[url('./assets/img/fundo-verde.png')] bg-repeat bg-[auto_500px] bg-[position:0%_-100%] min-h-screen grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full p-5 gap-x-3 gap-y-2">
       {receitas.map((receita) => (
         <div
           key={receita.id}
           onClick={() => abrirModal(receita)}
-          className="flex items-center justify-center text-[var(--color-dark-green)] font-bold text-2xl cursor-pointer w-full bg-pearl hover:shadow-[-5px_-5px_15px_2px,_5px_5px_15px_2px] hover:shadow-black/50 rounded-xl text-center md:h-64 lg:h-48"
+          className="flex items-center justify-center text-[var(--color-dark-green)] font-bold text-2xl cursor-pointer w-full bg-pearl hover:shadow-[-5px_-5px_15px_2px,_5px_5px_15px_2px] hover:shadow-black/50 rounded-xl text-center"
         >
           <h1>{receita.nome}</h1>
         </div>
@@ -57,7 +57,7 @@ export default function Cards() {
 
       {receitaSelecionada && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center">
-          <div className="bg-pearl p-6 rounded-lg shadow-lg max-w-md w-full relative text-center">
+          <div className="bg-pearl p-6 rounded-lg shadow-lg max-w-md w-3/4 relative text-center">
             <button
               className="absolute font-bold text-4xl top-0 right-2 text-[var(--color-dark-green)] hover:text-[var(--color-hunter-green)] cursor-pointer"
               onClick={fecharModal}

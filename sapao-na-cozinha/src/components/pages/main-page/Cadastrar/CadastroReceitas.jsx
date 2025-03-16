@@ -39,7 +39,7 @@ export default function CadastroReceita({ alternarComponente }) {
     }
     return(
         <div className="flex items-center justify-center min-h-screen  bg-[var(--color-quinacridone-magenta)] bg-[url('./assets/img/fundo-roxo.png')] bg-repeat bg-[size:500px]">
-                <form onSubmit={handleSubmit} className="flex flex-col items-center gap-8 p-4 bg-[var(--color-pearl)] rounded max-h-[80vh] shadow-[-10px_-10px_30px_4px,_10px_10px_30px_4px] text-[#55133b] overflow-y-auto">
+                <form onSubmit={handleSubmit} className="flex flex-col items-center gap-8 px-2 py-4 sm:p-4 bg-[var(--color-pearl)] rounded max-h-[80vh] shadow-[-10px_-10px_30px_4px,_10px_10px_30px_4px] text-[#55133b] overflow-y-auto">
 
                     <label htmlFor="nome-receita" className="font-bold text-2xl">Nome da receita:</label>
                     <input type="text" id="nome-receita" name="nome-receita" className="border border-[#55133b] text-3xl rounded"
@@ -51,7 +51,7 @@ export default function CadastroReceita({ alternarComponente }) {
 
                         <h2 className="font-bold">Ingredientes:</h2>
                         {ingredientesSelecionados.map((ingrediente, index) => (
-                            <div key={index} className="flex gap-2">
+                            <div key={index} className="flex flex-col sm:flex-row gap-2">
                                 <select
                                 value={ingrediente.id}
                                 onChange={(event)=> atualizarIngrediente(index, 'id', event.target.value)}
