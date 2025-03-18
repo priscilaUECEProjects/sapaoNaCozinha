@@ -1,47 +1,141 @@
 import { useState } from "react";
 
+import ModalReceita from "./ModalReceita";
+
 export default function Cards() {
   const [receitaSelecionada, setReceitaSelecionada] = useState(null);
-  const [precoReceita, setPreco] = useState(0);
-  const [materialReceita, setMaterial] = useState(0);
 
   const receitas = [
-    { id: "receita1", nome: "Cookies", rende: 23, itens: [{nome: "Item 1", quantidadeReceita: 100, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 2", quantidadeReceita: 50, precoProduto: 9.90, quantidadeProduto: 1000}, {nome: "Item 3", quantidadeReceita: 200, precoProduto: 6.50, quantidadeProduto: 1000}, {nome: "Item 4", quantidadeReceita: 75, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 5", quantidadeReceita: 60, precoProduto: 10.50, quantidadeProduto: 1000}] },
-    { id: "receita2", nome: "Bolo de cenoura", rende: 16, itens: [{nome: "Item 1", quantidadeReceita: 100, precoProduto: 10, quantidadeProduto: 1000}, {nome: "Item 2", quantidadeReceita: 50, precoProduto: 10, quantidadeProduto: 1000}, {nome: "Item 3", quantidadeReceita: 200, precoProduto: 10, quantidadeProduto: 1000}, {nome: "Item 4", quantidadeReceita: 75, precoProduto: 10, quantidadeProduto: 1000}, {nome: "Item 5", quantidadeReceita: 60, precoProduto: 10, quantidadeProduto: 1000}] },
-    { id: "receita3", nome: "Lasanha bolonhesa", rende: 8, itens: [{nome: "Item 1", quantidadeReceita: 100, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 2", quantidadeReceita: 50, precoProduto: 9.90, quantidadeProduto: 1000}, {nome: "Item 3", quantidadeReceita: 200, precoProduto: 6.50, quantidadeProduto: 1000}, {nome: "Item 4", quantidadeReceita: 75, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 5", quantidadeReceita: 60, precoProduto: 10.50, quantidadeProduto: 1000}] },
-    { id: "receita4", nome: "Pastel", rende: 10, itens: [{nome: "Item 1", quantidadeReceita: 100, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 2", quantidadeReceita: 50, precoProduto: 9.90, quantidadeProduto: 1000}, {nome: "Item 3", quantidadeReceita: 200, precoProduto: 6.50, quantidadeProduto: 1000}, {nome: "Item 4", quantidadeReceita: 75, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 5", quantidadeReceita: 60, precoProduto: 10.50, quantidadeProduto: 1000}] },
-    { id: "receita5", nome: "Salgado de forno", rende: 10, itens: [{nome: "Item 1", quantidadeReceita: 100, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 2", quantidadeReceita: 50, precoProduto: 9.90, quantidadeProduto: 1000}, {nome: "Item 3", quantidadeReceita: 200, precoProduto: 6.50, quantidadeProduto: 1000}, {nome: "Item 4", quantidadeReceita: 75, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 5", quantidadeReceita: 60, precoProduto: 10.50, quantidadeProduto: 1000}] },
-    { id: "receita6", nome: "Bolinha", rende: 10, itens: [{nome: "Item 1", quantidadeReceita: 100, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 2", quantidadeReceita: 50, precoProduto: 9.90, quantidadeProduto: 1000}, {nome: "Item 3", quantidadeReceita: 200, precoProduto: 6.50, quantidadeProduto: 1000}, {nome: "Item 4", quantidadeReceita: 75, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 5", quantidadeReceita: 60, precoProduto: 10.50, quantidadeProduto: 1000}] },
-    { id: "receita7", nome: "Pao de queijo", rende: 10, itens: [{nome: "Item 1", quantidadeReceita: 100, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 2", quantidadeReceita: 50, precoProduto: 9.90, quantidadeProduto: 1000}, {nome: "Item 3", quantidadeReceita: 200, precoProduto: 6.50, quantidadeProduto: 1000}, {nome: "Item 4", quantidadeReceita: 75, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 5", quantidadeReceita: 60, precoProduto: 10.50, quantidadeProduto: 1000}] },
-    { id: "receita8", nome: "Bolo de microondas", rende: 10, itens: [{nome: "Item 1", quantidadeReceita: 100, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 2", quantidadeReceita: 50, precoProduto: 9.90, quantidadeProduto: 1000}, {nome: "Item 3", quantidadeReceita: 200, precoProduto: 6.50, quantidadeProduto: 1000}, {nome: "Item 4", quantidadeReceita: 75, precoProduto: 8.50, quantidadeProduto: 1000}, {nome: "Item 5", quantidadeReceita: 60, precoProduto: 10.50, quantidadeProduto: 1000}] },
-  ];
+  {
+    id: 1,
+    nome: "Bolo de Chocolate",
+    rendimento: 1000,
+    ingredientes: [
+      { nome: "Farinha de Trigo", proporcao: 30, preco: 2.5 },
+      { nome: "Açúcar", proporcao: 20, preco: 1.8 },
+      { nome: "Cacau em Pó", proporcao: 15, preco: 3.2 },
+      { nome: "Ovos", proporcao: 20, preco: 4.0 },
+      { nome: "Manteiga", proporcao: 10, preco: 2.8 },
+      { nome: "Fermento em Pó", proporcao: 5, preco: 1.0 }
+    ]
+  },
+  {
+    id: 2,
+    nome: "Pão Integral",
+    rendimento: 800,
+    ingredientes: [
+      { nome: "Farinha Integral", proporcao: 50, preco: 4.0 },
+      { nome: "Água", proporcao: 30, preco: 0.5 },
+      { nome: "Fermento Biológico", proporcao: 10, preco: 1.5 },
+      { nome: "Sal", proporcao: 5, preco: 0.2 },
+      { nome: "Açúcar Mascavo", proporcao: 5, preco: 0.8 }
+    ]
+  },
+  {
+    id: 3,
+    nome: "Pizza Margherita",
+    rendimento: 1200,
+    ingredientes: [
+      { nome: "Farinha de Trigo", proporcao: 40, preco: 3.0 },
+      { nome: "Molho de Tomate", proporcao: 25, preco: 2.5 },
+      { nome: "Queijo Muçarela", proporcao: 20, preco: 5.0 },
+      { nome: "Manjericão", proporcao: 5, preco: 1.2 },
+      { nome: "Azeite de Oliva", proporcao: 5, preco: 2.0 },
+      { nome: "Sal", proporcao: 5, preco: 0.3 }
+    ]
+  },
+  {
+    id: 4,
+    nome: "Lasanha de Carne",
+    rendimento: 1500,
+    ingredientes: [
+      { nome: "Massa de Lasanha", proporcao: 40, preco: 3.5 },
+      { nome: "Molho de Tomate", proporcao: 20, preco: 2.5 },
+      { nome: "Carne Moída", proporcao: 20, preco: 6.0 },
+      { nome: "Queijo Muçarela", proporcao: 15, preco: 5.0 },
+      { nome: "Orégano", proporcao: 5, preco: 0.5 }
+    ]
+  },
+  {
+    id: 5,
+    nome: "Salada Caesar",
+    rendimento: 500,
+    ingredientes: [
+      { nome: "Alface", proporcao: 40, preco: 1.2 },
+      { nome: "Peito de Frango", proporcao: 30, preco: 4.5 },
+      { nome: "Queijo Parmesão", proporcao: 10, preco: 3.0 },
+      { nome: "Croutons", proporcao: 10, preco: 1.0 },
+      { nome: "Molho Caesar", proporcao: 10, preco: 2.0 }
+    ]
+  },
+  {
+    id: 6,
+    nome: "Risoto de Cogumelos",
+    rendimento: 700,
+    ingredientes: [
+      { nome: "Arroz Arbório", proporcao: 50, preco: 3.5 },
+      { nome: "Cogumelos", proporcao: 20, preco: 4.0 },
+      { nome: "Caldo de Legumes", proporcao: 20, preco: 1.5 },
+      { nome: "Cebola", proporcao: 5, preco: 0.8 },
+      { nome: "Parmesão Ralado", proporcao: 5, preco: 2.5 }
+    ]
+  },
+  {
+    id: 7,
+    nome: "Torta de Limão",
+    rendimento: 900,
+    ingredientes: [
+      { nome: "Farinha de Trigo", proporcao: 30, preco: 2.5 },
+      { nome: "Açúcar", proporcao: 20, preco: 1.8 },
+      { nome: "Manteiga", proporcao: 20, preco: 2.8 },
+      { nome: "Suco de Limão", proporcao: 15, preco: 1.2 },
+      { nome: "Leite Condensado", proporcao: 15, preco: 3.5 }
+    ]
+  },
+  {
+    id: 8,
+    nome: "Panqueca Americana",
+    rendimento: 600,
+    ingredientes: [
+      { nome: "Farinha de Trigo", proporcao: 40, preco: 2.5 },
+      { nome: "Ovos", proporcao: 20, preco: 4.0 },
+      { nome: "Leite", proporcao: 20, preco: 2.0 },
+      { nome: "Manteiga", proporcao: 10, preco: 2.8 },
+      { nome: "Fermento em Pó", proporcao: 10, preco: 1.0 }
+    ]
+  },
+  {
+    id: 9,
+    nome: "Brownie de Chocolate",
+    rendimento: 800,
+    ingredientes: [
+      { nome: "Chocolate Amargo", proporcao: 30, preco: 4.5 },
+      { nome: "Açúcar", proporcao: 25, preco: 1.8 },
+      { nome: "Manteiga", proporcao: 20, preco: 2.8 },
+      { nome: "Ovos", proporcao: 20, preco: 4.0 },
+      { nome: "Farinha de Trigo", proporcao: 5, preco: 2.5 }
+    ]
+  },
+  {
+    id: 10,
+    nome: "Cuscuz Nordestino",
+    rendimento: 700,
+    ingredientes: [
+      { nome: "Farinha de Milho", proporcao: 60, preco: 2.0 },
+      { nome: "Água", proporcao: 30, preco: 0.5 },
+      { nome: "Sal", proporcao: 5, preco: 0.2 },
+      { nome: "Manteiga", proporcao: 5, preco: 2.8 }
+    ]
+  }
+];
 
   const abrirModal = (receita) => {
     setReceitaSelecionada(receita);
-    calcular(receita);
   };
 
   const fecharModal = () => {
     setReceitaSelecionada(null);
-    setPreco(0);
-    setMaterial(0);
   };
-
-  function calcular(receita){
-    var i = 0;
-    let preco = 0;
-    let material = 0;
-    while(i < receita.itens.length){
-      let novoPreco = receita.itens[i].quantidadeReceita * receita.itens[i].precoProduto / receita.itens[i].quantidadeProduto;
-      preco = preco + novoPreco;
-      material = material + receita.itens[i].precoProduto;
-      console.log(preco);
-      i++;
-    };
-
-    setPreco(preco);
-    setMaterial(material);
-  }
 
   return (
     <div className="bg-hunter-green-ligther bg-[url('./assets/img/fundo-verde.png')] bg-repeat bg-[auto_500px] bg-[position:0%_-100%] min-h-screen grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full p-5 gap-x-3 gap-y-2">
@@ -54,28 +148,7 @@ export default function Cards() {
           <h1>{receita.nome}</h1>
         </div>
       ))}
-
-      {receitaSelecionada && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center">
-          <div className="bg-pearl p-6 rounded-lg shadow-lg max-w-md w-3/4 relative text-center">
-            <button
-              className="absolute font-bold text-4xl top-0 right-2 text-[var(--color-dark-green)] hover:text-[var(--color-hunter-green)] cursor-pointer"
-              onClick={fecharModal}
-            >
-              &times;
-            </button>
-            <h1 className="text-3xl font-bold text-[var(--color-dark-green)] pb-4">{receitaSelecionada.nome}</h1>
-            <ul>
-              {receitaSelecionada.itens.map((item, index) => (
-                <li key={index}>{item.nome} -------- {item.quantidadeReceita}g</li>
-              ))}
-            </ul><br />
-            <p>Essa receita rende {receitaSelecionada.rende} unidades.</p>
-            <p>A unidade dessa receita custa {precoReceita.toFixed(2)}.</p>
-            <p>Os materiais para essa receita custam ao todo {materialReceita.toFixed(2)}.</p>
-          </div>
-        </div>
-      )}
+      { receitaSelecionada && <ModalReceita fecharModal={fecharModal} receita={receitaSelecionada} /> }
     </div>
   );
 }
