@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import ModalReceita from "./ModalReceita";
 
-export default function Cards() {
+export default function CardsReceitas() {
   const [receitaSelecionada, setReceitaSelecionada] = useState(null);
 
   const receitas = [

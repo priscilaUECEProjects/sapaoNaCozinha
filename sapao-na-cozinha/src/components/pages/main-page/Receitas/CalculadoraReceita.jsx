@@ -27,17 +27,15 @@ export default function CalculadoraReceita({ setValorReceita, setNovaGramatura, 
 
     const calcularCMV = () => {
         const valorIngredientes = receita.ingredientes.reduce((acumulador, ing) => acumulador + ing.preco, 0);
-        const valorCMV = valorIngredientes+custoAdicional;
-        setCMV(valorCMV);
+        const custoAdicionalFloat = parseFloat(custoAdicional) || 0;
+        const valorCMV = valorIngredientes+custoAdicionalFloat;
+        setCMV(valorCMV.toFixed(2));
     };
 
     const calcularValorVenda = () => {
         const valorIngredientes = receita.ingredientes.reduce((acumulador, ing) => acumulador + ing.preco, 0);
         const valorCMV = valorIngredientes+custoAdicional;
         const valorMarkup = markup;
-
-        console.log('valorCMV:', valorCMV);
-        console.log('valorMarkup:', valorMarkup);
 
         if (!isNaN(valorCMV) && !isNaN(valorMarkup)) {
             const valorFinal = valorCMV * (1 + valorMarkup / 100);
@@ -71,20 +69,20 @@ export default function CalculadoraReceita({ setValorReceita, setNovaGramatura, 
                 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                 id="novo-rendimento" name="novo-rendimento" onChange={((event)=> setNovoRendimento(event.target.value))} required />
 
-                <div className="flex justify-center gap-2">
+                <div className="flex justify-center gap-2 w-full text-xs sm:text-base">
                     <input type="number" step="0.01" value={custoAdicional} placeholder="Custo adicional($)" className="border border-[var(--color-dark-green)] rounded
-                    [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[50%]"
                     id="custo-adicional" name="custo-adicional" onChange={((event)=> setCustoAdicional(event.target.value))} />
 
                     <input type="number" step="0.01" value={markup} placeholder="Markup(%)" className="border border-[var(--color-dark-green)] rounded
-                    [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[50%]"
                     id="markup" name="markup" onChange={((event)=> setMarkup(parseFloat(event.target.value)))} />
                 </div>
 
                 {erroForm && (<p className="text-[10px] bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Os valores devem ser positivos</p>)}
 
-                <button type="submit" className="font-bold p-2 my-2 border text-[var(--color-dark-green)] border-[var(--color-dark-green)] cursor-pointer rounded
-                 hover:bg-[var(--color-dark-green)] w-[30%] hover:text-[#F4F1E1]">Calcular</button>
+                <button type="submit" className="font-bold p-2 mt-2 border text-[var(--color-dark-green)] border-[var(--color-dark-green)] cursor-pointer rounded
+                 hover:bg-[var(--color-dark-green)] hover:text-[#F4F1E1] active:bg-[var(--color-hunter-green)] w-full">Calcular</button>
             </form>
         </div>
     );

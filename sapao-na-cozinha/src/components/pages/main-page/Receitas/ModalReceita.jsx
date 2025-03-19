@@ -51,18 +51,22 @@ export default function ModalReceita({ fecharModal, receita }){
                       ))}
                     </ul>
                     )}
+                    {(valorReceita > 0 || CMV > 0 || valorVenda > 0) && (
+                    <div className="flex flex-col sm:flex-row gap-2 justify-between my-3 w-full">
+                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor Receita: {valorReceita}</p>
+                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] w-[30%] rounded text-[#F4F1E1]">CMV: {CMV}</p>
+                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor de Venda: {valorVenda}</p>
+                    </div>)}
                       <CalculadoraReceita 
                       receita={receita}
                       setValorReceita={handleValorReceitaChange}
                       setNovaGramatura={handleNovaGramaturaChange}
                       setValorVenda={handleValorVendaChange}
                       setCMV={handleCMVChange} />
-                    {(valorReceita > 0 || CMV > 0 || valorVenda > 0) && (
-                    <div className="flex gap-2 justify-center mt-5">
-                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor Receita: {valorReceita}</p>
-                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">CMV: {CMV}</p>
-                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor de Venda: {valorVenda}</p>
-                    </div>)}
+                      <div className="flex justify-between mt-4 text-[var(--color-dark-green)]">
+                      <span className="material-symbols-outlined hover:text-[var(--color-hunter-green)] cursor-pointer active:text-[var(--color-dark-green)]">delete</span>
+                      <span class="material-symbols-outlined hover:text-[var(--color-hunter-green)] cursor-pointer active:text-[var(--color-dark-green)]">edit</span>
+                      </div>
                   </div>
                 </div>
     );
