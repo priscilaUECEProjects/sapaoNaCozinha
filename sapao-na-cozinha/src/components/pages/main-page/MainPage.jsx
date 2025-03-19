@@ -4,7 +4,8 @@ import PaginaInicial from './PaginaInicial';
 import PaginaCadastrar from './Cadastrar/PaginaCadastrar';
 import Header from './Header';
 import Footer from './Footer';
-import Cards from './Receitas/Cards';
+import CardsReceitas from './Receitas/CardsReceitas';
+import CardsIngredientes from './Ingredientes/CardsIngredientes';
 
 export default function MainPage() {
     return (
@@ -18,7 +19,10 @@ export default function MainPage() {
                 <PaginaCadastrar />
             </Element>
             <Element name='receitas' className='min-h-screen'>
-                <Cards />
+                <CardsReceitas />
+            </Element>
+            <Element name='ingredientes' className='min-h-screen'>
+                <CardsIngredientes />
             </Element>
 
             <Footer/>

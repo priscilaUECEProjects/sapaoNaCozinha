@@ -38,7 +38,7 @@ export default function Header() {
               to="inicio"
               smooth={true}
               duration={500}
-              className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer"
+              className="text-[#F4F1E1] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer"
             >
               Início
             </Link>
@@ -48,7 +48,7 @@ export default function Header() {
               to="cadastrar"
               smooth={true}
               duration={500}
-              className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer"
+              className="text-[#F4F1E1] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer"
             >
               Cadastrar
             </Link>
@@ -58,9 +58,19 @@ export default function Header() {
               to="receitas"
               smooth={true}
               duration={500}
-              className="text-[#F4F1E1] font-bold hover:text-[var(--color-dark-green)] cursor-pointer"
+              className="text-[#F4F1E1] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer"
             >
               Receitas
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="ingredientes"
+              smooth={true}
+              duration={500}
+              className="text-[#F4F1E1] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer"
+            >
+              Ingredientes
             </Link>
           </li>
         </ul>
