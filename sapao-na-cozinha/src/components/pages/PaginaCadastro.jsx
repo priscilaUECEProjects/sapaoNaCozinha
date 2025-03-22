@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function PaginaCadastro() {
     const [nome, setNome] = useState('');
@@ -7,63 +9,65 @@ export default function PaginaCadastro() {
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
 
-    const [erroNome, setErroNome] = useState('');
-    const [erroEmail, setErroEmail] = useState('');
-    const [erroSenha, setErroSenha] = useState('');
-    const [erroConfirmarSenha, setErroConfirmarSenha] = useState('');
 
     function validarNome(nome) {
         if (nome === ''){
-            return ('O nome é obrigatório');
+            toast.error('O nome é obrigatório');
+            return;
         }
-        return '';
     }
 
     function validarEmail(email) {
-        if(email === ''){
-            return ('O email é obrigatório');
+        if (email === '') {
+            toast.error('O email é obrigatório');
+            return;
         }
+    
         const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!regex.test(email)) return 'Email inválido';
-        return '';
-    }
-
-    function validarSenha(senha) {
-        if (senha === ''){
-            return ('A senha é obrigatória');
+    
+        if (!regex.test(email)) { 
+            toast.error("Email inválido");
+            return;
         }
-        if (senha.length < 8) return 'A senha deve ter pelo menos 8 caracteres';
-        return '';
+    }
+    
+    function validarSenha(senha) {
+        if (senha === '') {
+            toast.error('A senha é obrigatória');
+            return;
+        }
+        if (senha.length < 8) {
+            toast.error("A senha deve ter pelo menos 8 caracteres");
+            return;
+        }
     }
 
     function validarConfirmarSenha(senha, confirmarSenha) {
         if(confirmarSenha!==senha){
-            return ('As senhas não coincidem');
+            toast.error('As senhas não coincidem');
+            return;
         }
-        return '';
+        
     }
 
-    function handleSubmit(event) {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const erroNome = validarNome(nome);
-        const erroEmail = validarEmail(email);
-        const erroSenha = validarSenha(senha);
-        const erroConfirmarSenha = validarConfirmarSenha(confirmarSenha);
-
-        setErroNome(erroNome);
-        setErroEmail(erroEmail);
-        setErroSenha(erroSenha);
-        setErroConfirmarSenha(erroConfirmarSenha);
-
-        if(!erroNome && !erroEmail && !erroSenha && !erroConfirmarSenha){
-            return alert('Cadastro realizado com sucesso!');
+        if(validarNome(nome) || validarEmail(email) ||
+        validarSenha(senha) || validarConfirmarSenha(senha, confirmarSenha)){
+            return;
         }
 
-    }
+        const usuario = { email, nome, senha };
+    console.log("Enviando para o backend:", usuario);
 
-
-
+        try{
+            await axios.post("http://localhost:3000/USUARIOS", { email, nome, senha });
+            toast.success("Usuário cadastrado com sucesso!");
+        } catch (error){
+            toast.error("Erro ao cadastrar novo usuário: " + (error.response?.data?.error || "Erro desconhecido"))
+        }
+    };
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-[var(--color-quinacridone-magenta)] bg-[url('./assets/img/fundo-roxo.png')] bg-repeat bg-[size:500px]">
@@ -74,22 +78,18 @@ export default function PaginaCadastro() {
                     <label htmlFor="nome-usuario" className="font-bold">Nome</label>
                     <input type="text" id="nome-usuario" name="nome-usuario" className="w-8/12 border-[1px] border-[#55133b] rounded text-xl"
                     value={nome} onChange={(e)=> setNome(e.target.value)}/>
-                    {erroNome && <p className="text-[10px] bg-[#55133b] p-[3px] rounded text-[#F4F1E1]">{erroNome}</p>}
                     
                     <label htmlFor="email" className="font-bold">Email</label>
                     <input type="email" id="email" name="email" className="w-8/12 border-[1px] border-[#55133b] rounded text-xl" 
                     value={email} onChange={(e)=> setEmail(e.target.value)}/>
-                    {erroEmail && <p className="text-[10px] bg-[#55133b] p-[3px] rounded text-[#F4F1E1]">{erroEmail}</p>}
 
                     <label htmlFor="senha" className="font-bold">Senha</label>
                     <input type="password" id="senha" name="senha" className="w-8/12 border-[1px] border-[#55133b] rounded text-xl" 
                     value={senha} onChange={(e)=> setSenha(e.target.value)} />
-                    {erroSenha && <p className="text-[10px] bg-[#55133b] p-[3px] rounded text-[#F4F1E1]">{erroSenha}</p>}
 
                     <label htmlFor="confirmarSenha" className="font-bold">Confirme a senha</label>
                     <input type="password" id="confirmarSenha" name="confirmarSenha" className="w-8/12 border-[1px] border-[#55133b] rounded text-xl" 
                     value={confirmarSenha} onChange={(e)=> setConfirmarSenha(e.target.value)} />
-                    {erroConfirmarSenha && <p className="text-[10px] bg-[#55133b] p-[3px] rounded text-[#F4F1E1]">{erroConfirmarSenha}</p>}
 
                     <div className="flex items-center gap-5 justify-around w-full font-bold">
                         <button type="submit" className="mt-5 p-2 border-[1px] border-[#55133b] cursor-pointer rounded hover:bg-[#55133b] hover:text-[#F4F1E1]">Cadastrar</button>
