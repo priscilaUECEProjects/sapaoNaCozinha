@@ -9,7 +9,7 @@ export default function ModalReceita({ fecharModal, receita }){
     const [CMV, setCMV] = useState(0);
 
     const [editionForm, setEditionform] = useState(false);
-    const [editaProporcao, setEditaProporcao] = useState(0);
+    const [editaProporcao, setEditaProporcao] = useState(null);
     const [ingredientesReceita, setIngredientesReceita] = useState([]);
     const [ingredientesSelecionados, setIngredientesSelecionados] = useState([]);
 
@@ -88,9 +88,9 @@ export default function ModalReceita({ fecharModal, receita }){
                     )}
                     {(valorReceita > 0 || CMV > 0 || valorVenda > 0) && (
                     <div className="flex flex-col sm:flex-row gap-2 justify-between my-3 w-full">
-                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor Receita: {valorReceita}</p>
-                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] w-[30%] rounded text-[#F4F1E1]">CMV: {CMV}</p>
-                    <p className="text-sm bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor de Venda: {valorVenda}</p>
+                    <p className="text-xs bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor Receita: {valorReceita}</p>
+                    <p className="text-xs bg-[var(--color-dark-green)] p-[3px] w-[30%] rounded text-[#F4F1E1]">CMV: {CMV}</p>
+                    <p className="text-xs bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor de Venda: {valorVenda}</p>
                     </div>)}
                       <CalculadoraReceita 
                       receita={receita}

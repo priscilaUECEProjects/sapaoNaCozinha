@@ -24,7 +24,7 @@ model INGREDIENTES {
   ID Int @id @default(autoincrement())
   NOME String
   PRECO_UNITARIO Float
-  GRAMATURA_UNITARIA Int
+  GRAMATURA_UNITARIA Float
   Ingredientes_receita INGREDIENTES_RECEITA[]
 }
 
