@@ -20,6 +20,11 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleSair = () =>{
+    localStorage.removeItem('authToken');
+    window.location.href = '/';
+  }
+
   return (
     <header
       className={`bg-[var(--color-hunter-green)] py-4 px-6 flex justify-between items-center fixed w-full top-0 transition-transform duration-300 ${
@@ -38,7 +43,7 @@ export default function Header() {
               to="inicio"
               smooth={true}
               duration={500}
-              className="text-[#F4F1E1] font-bold text-xs md:text-[20px] hover:text-[var(--color-dark-green)] cursor-pointer"
+              className="text-[#F4F1E1] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer"
             >
               Início
             </Link>
@@ -48,7 +53,7 @@ export default function Header() {
               to="cadastrar"
               smooth={true}
               duration={500}
-              className="text-[#F4F1E1] font-bold text-xs md:text-[20px] hover:text-[var(--color-dark-green)] cursor-pointer"
+              className="text-[#F4F1E1] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer"
             >
               Cadastrar
             </Link>
@@ -58,7 +63,7 @@ export default function Header() {
               to="receitas"
               smooth={true}
               duration={500}
-              className="text-[#F4F1E1] font-bold text-xs md:text-[20px] hover:text-[var(--color-dark-green)] cursor-pointer"
+              className="text-[#F4F1E1] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer"
             >
               Receitas
             </Link>
@@ -68,10 +73,13 @@ export default function Header() {
               to="ingredientes"
               smooth={true}
               duration={500}
-              className="text-[#F4F1E1] font-bold text-xs md:text-[20px] hover:text-[var(--color-dark-green)] cursor-pointer"
+              className="text-[#F4F1E1] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer"
             >
               Ingredientes
             </Link>
+          </li>
+          <li>
+            <Link onClick={handleSair} className="text-[#ff0000] font-bold text-xs sm:text-1xl hover:text-[var(--color-dark-green)] cursor-pointer">Sair</Link>
           </li>
         </ul>
       </nav>
