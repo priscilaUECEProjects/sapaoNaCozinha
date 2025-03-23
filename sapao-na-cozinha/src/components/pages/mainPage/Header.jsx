@@ -20,6 +20,11 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleSair = () =>{
+    localStorage.removeItem('authToken');
+    window.location.href = '/';
+  }
+
   return (
     <header
       className={`bg-[var(--color-hunter-green)] py-4 px-6 flex justify-between items-center fixed w-full top-0 transition-transform duration-300 ${
@@ -72,6 +77,9 @@ export default function Header() {
             >
               Ingredientes
             </Link>
+          </li>
+          <li>
+            <Link onClick={handleSair} className="text-[#ff0000] font-bold text-xs md:text-[20px] hover:text-[var(--color-dark-green)] cursor-pointer">Sair</Link>
           </li>
         </ul>
       </nav>

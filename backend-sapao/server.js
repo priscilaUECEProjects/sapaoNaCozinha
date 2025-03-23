@@ -1,5 +1,7 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
+const loginRoutes = require('./express/login/loginRoutes.js');
+const receitasRoutes = require('./express/receitas/receitasRoutes.js');
 
 const app = express();
 const prisma = new PrismaClient();
@@ -8,6 +10,10 @@ const cors = require("cors");
 app.use(cors());
 
 app.use(express.json());
+
+app.use('/login', loginRoutes);
+
+app.use('/receitas', receitasRoutes);
 
 //Página Cadastro
 app.post("/USUARIOS", async (req, res) => {

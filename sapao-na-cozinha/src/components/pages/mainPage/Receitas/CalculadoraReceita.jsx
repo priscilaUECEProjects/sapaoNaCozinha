@@ -10,30 +10,31 @@ export default function CalculadoraReceita({ setValorReceita, setNovaGramatura, 
     const calcularGramaturaIngredientes = () => {
         const rendimento = parseFloat(novoRendimento);
 
-        const gramaturaIngredientes = receita.ingredientes.map(ing => ({
-            nome: ing.nome,
-            gramatura: (ing.proporcao/100)*rendimento
+        const gramaturaIngredientes = receita.Ingredientes_receita.map(ing => ({
+            nome: ing.Ingredientes.NOME,
+            gramatura: (ing.PROPORCAO_INGREDIENTE/100)*rendimento
         }));
 
         setNovaGramatura(gramaturaIngredientes);
     };
 
     const calcularValorReceita = () => {
-        const valorIngredientes = receita.ingredientes.reduce((acumulador, ing) => {
-            return acumulador + ing.preco;
+        const valorIngredientes = receita.Ingredientes_receita.reduce((acumulador, ing) => {
+            let preco = ing.PROPORCAO_INGREDIENTE * ing.Ingredientes.PRECO_UNITARIO / ing.Ingredientes.GRAMATURA_UNITARIA
+            return acumulador + preco;
         }, 0);
         setValorReceita(valorIngredientes.toFixed(2));
     };
 
     const calcularCMV = () => {
-        const valorIngredientes = receita.ingredientes.reduce((acumulador, ing) => acumulador + ing.preco, 0);
+        const valorIngredientes = receita.Ingredientes_receita.reduce((acumulador, ing) => ing.PROPORCAO_INGREDIENTE * ing.Ingredientes.PRECO_UNITARIO / ing.Ingredientes.GRAMATURA_UNITARIA + acumulador, 0);
         const custoAdicionalFloat = parseFloat(custoAdicional) || 0;
         const valorCMV = valorIngredientes+custoAdicionalFloat;
         setCMV(valorCMV.toFixed(2));
     };
 
     const calcularValorVenda = () => {
-        const valorIngredientes = receita.ingredientes.reduce((acumulador, ing) => acumulador + ing.preco, 0);
+        const valorIngredientes = receita.Ingredientes_receita.reduce((acumulador, ing) => ing.PROPORCAO_INGREDIENTE * ing.Ingredientes.PRECO_UNITARIO / ing.Ingredientes.GRAMATURA_UNITARIA + acumulador, 0);
         const valorCMV = valorIngredientes+custoAdicional;
         const valorMarkup = markup;
 
