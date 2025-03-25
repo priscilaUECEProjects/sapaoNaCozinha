@@ -1,21 +1,30 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-export default function CadastroReceita({ alternarComponente }) {
+export default function CadastroReceita({ alternarComponente,usuario }) {
     const [nomeReceita, setNomeReceita] = useState('');
+    const [rendimentoReceita, setRendimentoReceita] = useState('');
     const [ingredientesReceita, setIngredientesReceita] = useState([]);
     const [ingredientesSelecionados, setIngredientesSelecionados] = useState([]);
 
     useEffect(() => {
-        setIngredientesReceita([
-            { id: 1, nome: "Farinha" },
-            { id: 2, nome: "Ovo" },
-            { id: 3, nome: "Leite" },
-            { id: 4, nome: "Açúcar" },
-        ]);
+        const GetIngredientes = async () => {
+            try{
+                const ingredientes = await axios.post("http://localhost:3000/receitas/opcoes",{
+                    ID_USUARIO: usuario.EMAIL,
+                });
+            setIngredientesReceita(ingredientes.data);
+            } catch(error){
+                console.error("Erro ao procurar ingredientes disponíveis:", error.response?.data || error.message);
+            }
+        }
+
+        GetIngredientes();
     }, []);
 
     const adicionarIngrediente = () => {
-        setIngredientesSelecionados([...ingredientesSelecionados, { id: "", proporcao: ""}]);
+        setIngredientesSelecionados([...ingredientesSelecionados, {ID_INGREDIENTE: '', PROPORCAO_INGREDIENTE: ''}]);
     }
 
     const atualizarIngrediente = (index, campo, valor) => {
@@ -30,12 +39,34 @@ export default function CadastroReceita({ alternarComponente }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const dadosReceita = {
-            nome: nomeReceita,
-            ingredientes: ingredientesSelecionados,
+        const ingredientesTransformados = ingredientesSelecionados.map((ingrediente) => ({
+            ID_INGREDIENTE: parseInt(ingrediente.ID_INGREDIENTE, 10),
+            PROPORCAO_INGREDIENTE: parseFloat(ingrediente.PROPORCAO_INGREDIENTE)
+        }));
+        const novaReceita = {
+            NOME: nomeReceita,
+            QNT_PADRAO: parseFloat(rendimentoReceita),
+            ID_USUARIO: usuario.EMAIL,
+            Ingredientes_receita: [...ingredientesTransformados],
+        };
+
+        const Criar = async () => {
+            try {
+                console.log(novaReceita)
+                const response = await axios.post('http://localhost:3000/receitas/criar', novaReceita);
+            
+                if (response.status === 201) {
+                  toast.success('Receita criada com sucesso!');
+                  window.location.reload();
+                }
+            } catch (error) {
+                toast.error('Erro ao criar a receita.');
+            }
         }
-        console.log('cadastro de receita feito com sucesso', dadosReceita);
+
+        Criar();
     }
+
     return(
         <div className="flex items-center justify-center min-h-screen  bg-[var(--color-quinacridone-magenta)] bg-[url('./assets/img/fundo-roxo.png')] bg-repeat bg-[size:500px]">
                 <form onSubmit={handleSubmit} className="flex flex-col items-center gap-8 px-2 py-4 sm:p-4 bg-[var(--color-pearl)] rounded max-h-[80vh] shadow-[-10px_-10px_30px_4px,_10px_10px_30px_4px] text-[#55133b] overflow-y-auto">
@@ -48,17 +79,17 @@ export default function CadastroReceita({ alternarComponente }) {
                         {ingredientesSelecionados.map((ingrediente, index) => (
                             <div key={index} className="flex flex-col sm:flex-row gap-2">
                                 <select
-                                value={ingrediente.id}
-                                onChange={(event)=> atualizarIngrediente(index, 'id', event.target.value)}
+                                value={ingrediente.ID}
+                                onChange={(event)=> atualizarIngrediente(index, 'ID_INGREDIENTE', event.target.value)}
                                 className="border border-[#55133b] rounded cursor-pointer">
                                 <option value="">Selecione um ingrediente:</option>
                                 {ingredientesReceita.map((ing)=> (
-                                    <option key={ing.id} value={ing.id}>{ing.nome}</option>
+                                    <option key={ing.ID} value={ing.ID}>{ing.NOME}</option>
                                 ))}
                                 </select>
                                 <input type="number" step="0.01" placeholder="Proporção(%)" className="border border-[#55133b] rounded
-                                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={ingrediente.proporcao}
-                                onChange={(event)=> atualizarIngrediente(index, 'proporcao', event.target.value)}/>
+                                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={ingrediente.PROPORCAO_INGREDIENTE}
+                                onChange={(event)=> atualizarIngrediente(index, 'PROPORCAO_INGREDIENTE', event.target.value)}/>
                                 <button type="button" onClick={() => removerIngrediente(index)}>
                                 <span className="material-symbols-outlined cursor-pointer hover:text-[#803c65]">delete</span></button>
                             </div>
@@ -70,7 +101,7 @@ export default function CadastroReceita({ alternarComponente }) {
                         </div>
 
                         <label htmlFor="rendimento-receita" className="font-bold text-2xl">Rendimento da receita(g):</label>
-                        <input type="number" id="rendimento-receita" name="rendimento-receita" step="0.01" className="border border-[#55133b] text-3xl rounded
+                        <input onChange={(event) => setRendimentoReceita(event.target.value)} type="number" id="rendimento-receita" name="rendimento-receita" step="0.01" className="border border-[#55133b] text-3xl rounded
                         [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"/>                  
 
                     <div className="flex items-center justify-around w-full font-bold">
