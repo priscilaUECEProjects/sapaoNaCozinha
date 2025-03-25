@@ -1,0 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.ingrediente {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
