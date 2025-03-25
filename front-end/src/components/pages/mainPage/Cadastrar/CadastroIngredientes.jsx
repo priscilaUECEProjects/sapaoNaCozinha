@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function CadastroIngredientes({ alternarComponente }) {
+export default function CadastroIngredientes({ alternarComponente, usuario }) {
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
     const [gramatura, setGramatura] = useState("");
@@ -25,7 +25,7 @@ export default function CadastroIngredientes({ alternarComponente }) {
         }
 
         try{
-            await axios.post("http://localhost:3000/INGREDIENTES", { nome, preco: precoNumber, gramatura: gramaturaNumber });
+            await axios.post("http://localhost:3000/INGREDIENTES", { nome, preco: precoNumber, gramatura: gramaturaNumber, ID_USUARIO: usuario.EMAIL });
             toast.success("Ingrediente cadastrado com sucesso!");
         } catch (error){
             toast.error("Erro ao cadastrar novo ingrediente: " + (error.response?.data?.error || "Erro desconhecido"));

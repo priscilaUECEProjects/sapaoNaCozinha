@@ -16,7 +16,7 @@ export default function CardsReceitas({usuario}) {
         });
         setReceitas(response.data);
       } catch(error){
-        toast.error('Erro ao buscar receitas do usuário.');
+        toast.error(`Erro ao buscar receitas do usuário: ${error}`);
       };
     };
 

@@ -60,7 +60,7 @@ export default function CadastroReceita({ alternarComponente,usuario }) {
                   window.location.reload();
                 }
             } catch (error) {
-                toast.error('Erro ao criar a receita.');
+                toast.error(`Erro ao criar a receita: ${error.message}`);
             }
         }
 

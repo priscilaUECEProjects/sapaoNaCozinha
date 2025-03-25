@@ -125,7 +125,7 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
               );
                 toast.success("Ingrediente removido com sucesso");
               } catch (error) {
-                toast.error("Erro ao deletar ingrediente da receita.");
+                toast.error(`Erro ao deletar ingrediente da receita: ${error}`);
               }
             };
           

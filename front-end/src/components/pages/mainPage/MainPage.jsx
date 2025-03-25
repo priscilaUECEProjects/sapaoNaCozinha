@@ -29,7 +29,7 @@ export default function MainPage() {
                 });
                 setUsuario(response.data);
             } catch (error) {
-                toast.error('Erro ao buscar informações do usuário. Faça login novamente.');
+                toast.error(`Erro ao buscar informações do usuário. Faça login novamente: ${error}`);
                 localStorage.removeItem('authToken');
                 window.location.href = '/';
             }
