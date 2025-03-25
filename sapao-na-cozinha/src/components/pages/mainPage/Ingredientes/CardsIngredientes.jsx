@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import axios from "axios";
 import ModalIngredientes from "./ModalIngredientes";
 
 export default function CardsIngredientes(){
@@ -17,6 +17,19 @@ export default function CardsIngredientes(){
         { id: 9, nome: "Sal", precoUnitario: 1.20, gramaturaUnidade: 1000 },
         { id: 10, nome: "Baunilha", precoUnitario: 8.40, gramaturaUnidade: 30 }
       ];
+
+      useEffect(() => {
+        const fetchIngredientes = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/INGREDIENTES');
+                setIngredientes(response.data);
+            } catch (error) {
+                console.error('Erro ao obter ingredientes', error);
+            }
+        };
+
+        fetchIngredientes();
+    }, []);
 
       const abrirModal = (ingrediente) => {
         setIngredienteSelecionado(ingrediente);

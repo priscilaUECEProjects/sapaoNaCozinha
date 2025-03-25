@@ -2,9 +2,36 @@ import { useState } from "react";
 
 export default function ModalIngredientes({ fecharModal, ingrediente}){
     const [editionForm, setEditionform] = useState(false);
+    const [nome, setNome] = useState(ingrediente.NOME);
+    const [preco, setPreco] = useState(ingrediente.PRECO_UNITARIO);
+    const [gramatura, setGramatura] = useState(ingrediente.GRAMATURA_UNITARIA);
 
     const handleClick = () => {
         setEditionform(((prevState) => !prevState));
+    };
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`http://localhost:3000/INGREDIENTES/${ingrediente.id}`);
+            atualizarIngredientes();
+            fecharModal();
+        } catch (error) {
+            console.error('Erro ao deletar ingrediente', error);
+        }
+    };
+
+    const handleEdit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.put(`http://localhost:3000/INGREDIENTES/${ingrediente.id}`, {
+                NOME: nome,
+                PRECO_UNITARIO: preco,
+                GRAMATURA_UNITARIA: gramatura
+            });
+            atualizarIngredientes();
+            fecharModal();
+        } catch (error) {
+            console.error('Erro ao editar ingrediente', error);
+        }
     };
 
     return (
