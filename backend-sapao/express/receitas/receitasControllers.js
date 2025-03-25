@@ -128,3 +128,26 @@ exports.getIngredientesDisponiveis = async (req,res) => {
         res.status(500).json({ error: 'Erro ao buscar os ingredientes do usuario' });
     }
 };
+
+exports.createReceitaComIngrediente = async (req, res) => {
+    const { NOME, QNT_PADRAO, ID_USUARIO, Ingredientes_receita } = req.body;
+
+    try {
+        const novaReceita = await prisma.RECEITAS.create({
+            data: {
+                NOME,
+                QNT_PADRAO,
+                ID_USUARIO,
+                Ingredientes_receita: {
+                    create: Ingredientes_receita,
+                },
+            },
+            include: {
+                Ingredientes_receita: true,
+            },
+        });
+        res.status(201).json(novaReceita);
+    } catch (error) {
+        res.status(400).json({ error: 'Erro ao criar a receita com ingredientes'});
+    }
+};
