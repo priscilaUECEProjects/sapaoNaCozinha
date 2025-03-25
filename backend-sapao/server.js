@@ -40,7 +40,7 @@ app.post("/INGREDIENTES", async (req, res) => {
     try{
         const { nome, preco, gramatura } = req.body;
 
-        const novoIngrediente = await prisma.iNGREDIENTES.create({
+        const novoIngrediente = await prisma.INGREDIENTES.create({
             data: { NOME: nome, PRECO_UNITARIO: preco, GRAMATURA_UNITARIA: gramatura },
         });
 
