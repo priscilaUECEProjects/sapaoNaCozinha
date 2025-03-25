@@ -3,7 +3,7 @@ import { useState } from "react";
 import CadastroIngredientes from "./CadastroIngredientes";
 import CadastroReceitas from "./CadastroReceitas";
 
-export default function PaginaCadastrar() {
+export default function PaginaCadastrar({usuario}) {
     const [paginaAtiva, setPaginaAtiva] = useState("ingrediente");
 
     const alternarComponente = (pagina) => {
@@ -15,7 +15,7 @@ export default function PaginaCadastrar() {
             {paginaAtiva === "ingrediente" ? (
                 <CadastroIngredientes alternarComponente={alternarComponente} />
             ) : (
-                <CadastroReceitas alternarComponente={alternarComponente} />
+                <CadastroReceitas alternarComponente={alternarComponente} usuario={usuario}/>
             )}
         </div>
     );
