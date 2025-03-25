@@ -48,7 +48,7 @@ export default function MainPage() {
                     <PaginaInicial usuario={usuario} />
                 </Element>
                 <Element name='cadastrar' className='min-h-screen'>
-                    <PaginaCadastrar />
+                    <PaginaCadastrar usuario={usuario} />
                 </Element>
                 <Element name='receitas' className='min-h-screen'>
                     <CardsReceitas usuario={usuario} />
