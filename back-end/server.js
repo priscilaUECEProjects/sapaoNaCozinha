@@ -42,21 +42,26 @@ app.post("/USUARIOS", async (req, res) => {
 });
 
 //
-app.get("/INGREDIENTES", async (req, res) => {
+app.post("/INGREDIENTES", async (req, res) => {
+  const {ID_USUARIO} = req.body
+
   try {
-      const ingredientes = await prisma.INGREDIENTES.findMany();
+      const ingredientes = await prisma.INGREDIENTES.findMany({
+        where: {ID_USUARIO: String(ID_USUARIO)},
+        orderBy: {ID: 'asc'},
+      })
       res.status(200).json(ingredientes);
   } catch (error) {
       res.status(500).json({ error: "Erro ao buscar ingredientes", details: error.message });
   }
 });
 
-app.post("/INGREDIENTES", async (req, res) => {
+app.post("/INGREDIENTES/criar", async (req, res) => {
   try{
       const { nome, preco, gramatura, ID_USUARIO } = req.body;
         
       const novoIngrediente = await prisma.INGREDIENTES.create({
-          data: { NOME: nome, PRECO_UNITARIO: preco, GRAMATURA_UNITARIA: gramatura, ID_USUARIO },
+          data: { NOME: nome, PRECO_UNITARIO: preco, GRAMATURA_UNITARIA: gramatura, ID_USUARIO: ID_USUARIO },
       });
 
       res.status(201).json(novoIngrediente);
@@ -115,18 +120,22 @@ app.delete("/INGREDIENTES/:ID", async (req, res) => {
       }
 
       const ingredienteExiste = await prisma.INGREDIENTES.findUnique({
-        where: { ID: Number(ID) },
+        where: { ID: parseInt(ID) },
       });
 
       if(!ingredienteExiste){
         return res.status(404).json({error: "Ingrediente não encontrado"});
       }
 
-      await prisma.INGREDIENTES.delete({
-          where: { ID: Number(ID) },
+      await prisma.INGREDIENTES_RECEITA.deleteMany({
+            where: { ID_INGREDIENTE: parseInt(ID) },
       });
 
-      res.status(200).json({ error: "Ingrediente deletado com sucesso!", details: error.message });
+      await prisma.INGREDIENTES.delete({
+          where: { ID: parseInt(ID) },
+      });
+
+      res.status(204).send();
 
   } catch (error) {
       res.status(500).json({ error: "Erro ao deletar ingrediente", details: error.message });
