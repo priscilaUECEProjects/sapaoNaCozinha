@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import {toast} from 'react-toastify'
 
-export default function ModalIngredientes({ fecharModal, ingrediente }){
+export default function ModalIngredientes({ fecharModal, ingrediente}){
     const [editionForm, setEditionform] = useState(false);
 
     const [novoNome, setNovoNome] = useState(ingrediente.NOME);
@@ -27,7 +27,7 @@ export default function ModalIngredientes({ fecharModal, ingrediente }){
             });
 
             toast.success("Ingrediente atualizado com sucesso!");
-        
+            window.location.reload();
         } catch (error) {
             toast.error(`Erro ao editar ingrediente: ${error.message}`);
         }
@@ -36,10 +36,9 @@ export default function ModalIngredientes({ fecharModal, ingrediente }){
     const handleDelete = async () => {
         try {
             await axios.delete(`http://localhost:3000/INGREDIENTES/${ingrediente.ID}`);
-
             fecharModal();
-
             toast.success("Ingrediente deletado com sucesso!");
+            window.location.reload();
 
         } catch (error) {
             toast.error(`Erro ao deletar ingrediente:  ${error}`);
