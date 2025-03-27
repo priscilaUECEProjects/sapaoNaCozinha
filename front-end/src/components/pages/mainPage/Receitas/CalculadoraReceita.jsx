@@ -20,30 +20,37 @@ export default function CalculadoraReceita({ setValorReceita, setNovaGramatura, 
 
     const calcularValorReceita = () => {
         const valorIngredientes = receita.Ingredientes_receita.reduce((acumulador, ing) => {
-            let preco = ing.PROPORCAO_INGREDIENTE * ing.Ingredientes.PRECO_UNITARIO / ing.Ingredientes.GRAMATURA_UNITARIA
+            const preco = (ing.PROPORCAO_INGREDIENTE / 100) * novoRendimento * 
+            (ing.Ingredientes.PRECO_UNITARIO / ing.Ingredientes.GRAMATURA_UNITARIA);            
             return acumulador + preco;
         }, 0);
         setValorReceita(valorIngredientes.toFixed(2));
     };
 
     const calcularCMV = () => {
-        const valorIngredientes = receita.Ingredientes_receita.reduce((acumulador, ing) => ing.PROPORCAO_INGREDIENTE * ing.Ingredientes.PRECO_UNITARIO / ing.Ingredientes.GRAMATURA_UNITARIA + acumulador, 0);
+        const valorIngredientes = receita.Ingredientes_receita.reduce((acumulador, ing) => {
+            const preco = (ing.PROPORCAO_INGREDIENTE / 100) * novoRendimento * 
+                          (ing.Ingredientes.PRECO_UNITARIO / ing.Ingredientes.GRAMATURA_UNITARIA);
+            return acumulador + preco;
+        }, 0);
+    
         const custoAdicionalFloat = parseFloat(custoAdicional) || 0;
-        const valorCMV = valorIngredientes+custoAdicionalFloat;
+        const valorCMV = valorIngredientes + custoAdicionalFloat;
+    
         setCMV(valorCMV.toFixed(2));
+        return valorCMV;
     };
 
     const calcularValorVenda = () => {
-        const valorIngredientes = receita.Ingredientes_receita.reduce((acumulador, ing) => ing.PROPORCAO_INGREDIENTE * ing.Ingredientes.PRECO_UNITARIO / ing.Ingredientes.GRAMATURA_UNITARIA + acumulador, 0);
-        const valorCMV = valorIngredientes+custoAdicional;
-        const valorMarkup = markup;
-
+        const valorCMV = calcularCMV();
+        const valorMarkup = parseFloat(markup) || 0;
+    
         if (!isNaN(valorCMV) && !isNaN(valorMarkup)) {
             const valorFinal = valorCMV * (1 + valorMarkup / 100);
             setValorVenda(valorFinal.toFixed(2));
-          } else {
-            setValorVenda(0);
-          }
+        } else {
+            setValorVenda("0.00");
+        }
     };
 
     const handleSubmit = (event) => {
@@ -68,12 +75,12 @@ export default function CalculadoraReceita({ setValorReceita, setNovaGramatura, 
                 <label className="font-bold text-[var(--color-dark-green)]">Quanto você deseja preparar(g)?</label>
                 <input type="number" step="0.01" value={novoRendimento} className="border border-[var(--color-dark-green)] rounded w-full
                 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
-                id="novo-rendimento" name="novo-rendimento" onChange={((event)=> setNovoRendimento(event.target.value))} required />
+                id="novo-rendimento" name="novo-rendimento" onChange={((event)=> setNovoRendimento(parseFloat(event.target.value)))} required />
 
                 <div className="flex justify-center gap-2 w-full text-xs sm:text-base">
                     <input type="number" step="0.01" value={custoAdicional} placeholder="Custo adicional($)" className="border border-[var(--color-dark-green)] rounded
                     [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[50%]"
-                    id="custo-adicional" name="custo-adicional" onChange={((event)=> setCustoAdicional(event.target.value))} />
+                    id="custo-adicional" name="custo-adicional" onChange={((event)=> setCustoAdicional(parseFloat(event.target.value)))} />
 
                     <input type="number" step="0.01" value={markup} placeholder="Markup(%)" className="border border-[var(--color-dark-green)] rounded
                     [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[50%]"

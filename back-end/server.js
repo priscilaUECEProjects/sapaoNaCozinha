@@ -27,6 +27,19 @@ app.post("/USUARIOS", async (req, res) => {
           if (usuarioExistente) {
             return res.status(400).json({ error: "Usuário com este e-mail já existe!" });
           }
+
+          if (!nome || nome.trim() === '') {
+            return res.status(400).json({ error: 'O nome é obrigatório' });
+        }
+    
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!email || !emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Email inválido' });
+        }
+    
+        if (!senha || senha.length < 8) {
+            return res.status(400).json({ error: 'A senha deve ter pelo menos 8 caracteres' });
+        }
           
         const novoUsuario = await prisma.USUARIOS.create({
             data: { EMAIL: email, NOME: nome, SENHA: senha },

@@ -41,7 +41,7 @@ export default function CardsIngredientes({usuario}){
                   <h1>{ingrediente.NOME}</h1>
                 </div>
               ))}
-              { ingredienteSelecionado && <ModalIngredientes fecharModal={fecharModal} ingrediente={ingredienteSelecionado}/> }
+              { ingredienteSelecionado && <ModalIngredientes fecharModal={fecharModal} ingrediente={ingredienteSelecionado} setIngredientes={setIngredientes} /> }
             </div>
       );
 }

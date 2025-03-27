@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import {toast} from 'react-toastify'
 
-export default function ModalIngredientes({ fecharModal, ingrediente}){
+export default function ModalIngredientes({ fecharModal, ingrediente, setIngredientes }){
     const [editionForm, setEditionform] = useState(false);
 
     const [novoNome, setNovoNome] = useState(ingrediente.NOME);
@@ -27,7 +27,6 @@ export default function ModalIngredientes({ fecharModal, ingrediente}){
             });
 
             toast.success("Ingrediente atualizado com sucesso!");
-            window.location.reload();
         } catch (error) {
             toast.error(`Erro ao editar ingrediente: ${error.message}`);
         }
@@ -36,10 +35,9 @@ export default function ModalIngredientes({ fecharModal, ingrediente}){
     const handleDelete = async () => {
         try {
             await axios.delete(`http://localhost:3000/INGREDIENTES/${ingrediente.ID}`);
+            setIngredientes((prevIngredientes) => prevIngredientes.filter(i => i.ID !== ingrediente.ID));
             fecharModal();
             toast.success("Ingrediente deletado com sucesso!");
-            window.location.reload();
-
         } catch (error) {
             toast.error(`Erro ao deletar ingrediente:  ${error}`);
         }
@@ -70,16 +68,16 @@ export default function ModalIngredientes({ fecharModal, ingrediente}){
                     <h1 className="text-2xl pb-4">Editar ingrediente</h1>
                     <form className="flex flex-col gap-2" onSubmit={handleEditionFormSubmit}>
                         <label>Nome:</label>
-                        <input type="text" className="border border-[#55133b] rounded"
+                        <input type="text" className="border border-[#55133b] rounded text-md font-normal"
                         onChange={(e) => setNovoNome(e.target.value)} value={novoNome} />
 
                         <label>Preço:</label>
-                        <input type="number" step="0.01" className="border border-[#55133b] rounded
+                        <input type="number" step="0.01" className="border border-[#55133b] rounded text-md font-normal
                         [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                         onChange={(e) => setNovoPreco(e.target.value)} value={novoPreco} />
 
                         <label>Gramatura:</label>
-                        <input type="number" step="0.01" className="border border-[#55133b] rounded
+                        <input type="number" step="0.01" className="border border-[#55133b] rounded text-md font-normal
                         [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                         onChange={(e) => setNovaGramatura(e.target.value)} value={novaGramatura} />
 
