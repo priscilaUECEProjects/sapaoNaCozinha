@@ -60,7 +60,7 @@ export default function CadastroReceita({ alternarComponente,usuario }) {
                   window.location.reload();
                 }
             } catch (error) {
-                toast.error('Erro ao criar a receita.');
+                toast.error(`Erro ao criar a receita: ${error.message}`);
             }
         }
 
@@ -72,22 +72,22 @@ export default function CadastroReceita({ alternarComponente,usuario }) {
                 <form onSubmit={handleSubmit} className="flex flex-col items-center gap-8 px-2 py-4 sm:p-4 bg-[var(--color-pearl)] rounded max-h-[80vh] shadow-[-10px_-10px_30px_4px,_10px_10px_30px_4px] text-[#55133b] overflow-y-auto">
 
                     <label htmlFor="nome-receita" className="font-bold text-2xl">Nome da receita:</label>
-                    <input type="text" id="nome-receita" name="nome-receita" className="border border-[#55133b] text-3xl rounded"
+                    <input type="text" id="nome-receita" name="nome-receita" className="border border-[#55133b] text-md h-10 rounded w-full"
                     value={nomeReceita} onChange={(event) => setNomeReceita(event.target.value)} required/>
 
                         <h2 className="font-bold">Ingredientes:</h2>
                         {ingredientesSelecionados.map((ingrediente, index) => (
-                            <div key={index} className="flex flex-col sm:flex-row gap-2">
+                            <div key={index} className="flex flex-col sm:flex-row gap-2 w-full items-center">
                                 <select
                                 value={ingrediente.ID}
                                 onChange={(event)=> atualizarIngrediente(index, 'ID_INGREDIENTE', event.target.value)}
-                                className="border border-[#55133b] rounded cursor-pointer">
-                                <option value="">Selecione um ingrediente:</option>
+                                className="border border-[#55133b] rounded cursor-pointer w-2/4">
+                                <option value=""></option>
                                 {ingredientesReceita.map((ing)=> (
                                     <option key={ing.ID} value={ing.ID}>{ing.NOME}</option>
                                 ))}
                                 </select>
-                                <input type="number" step="0.01" placeholder="Proporção(%)" className="border border-[#55133b] rounded
+                                <input type="number" step="0.01" placeholder="Proporção(%)" className="border border-[#55133b] rounded w-2/4
                                 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" value={ingrediente.PROPORCAO_INGREDIENTE}
                                 onChange={(event)=> atualizarIngrediente(index, 'PROPORCAO_INGREDIENTE', event.target.value)}/>
                                 <button type="button" onClick={() => removerIngrediente(index)}>
@@ -101,7 +101,7 @@ export default function CadastroReceita({ alternarComponente,usuario }) {
                         </div>
 
                         <label htmlFor="rendimento-receita" className="font-bold text-2xl">Rendimento da receita(g):</label>
-                        <input onChange={(event) => setRendimentoReceita(event.target.value)} type="number" id="rendimento-receita" name="rendimento-receita" step="0.01" className="border border-[#55133b] text-3xl rounded
+                        <input onChange={(event) => setRendimentoReceita(event.target.value)} type="number" id="rendimento-receita" name="rendimento-receita" step="0.01" className="border border-[#55133b] text-md h-10 rounded w-full
                         [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"/>                  
 
                     <div className="flex items-center justify-around w-full font-bold">

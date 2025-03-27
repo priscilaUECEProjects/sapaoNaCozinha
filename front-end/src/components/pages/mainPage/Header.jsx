@@ -79,7 +79,7 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link onClick={handleSair} className="text-[#ff0000] font-bold text-xs md:text-[20px] hover:text-[var(--color-dark-green)] cursor-pointer">Sair</Link>
+            <Link onClick={handleSair} className="text-[var(--color-hunter-green)] bg-[var(--color-dark-green)] p-1 rounded font-bold text-xs md:text-[20px] hover:text-[#F4F1E1] cursor-pointer">Sair</Link>
           </li>
         </ul>
       </nav>

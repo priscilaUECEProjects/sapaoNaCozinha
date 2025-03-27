@@ -65,6 +65,7 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
             await axios.delete(`http://localhost:3000/receitas/${receita.ID}`);
             fecharModal();
             setReceitas((prevReceitas) => prevReceitas.filter(r => r.ID !== receita.ID));
+            toast.success("Receita deletada com sucesso!");
         } catch (error) {
             console.error("Erro ao deletar receita:", error.response?.data || error.message);
             toast.error('Erro ao deletar receitas do usuário.');
@@ -92,7 +93,7 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
             });
             setIngredientesDisponiveis(ingredientes.data);
           } catch(error){
-            console.error("Erro ao procurar ingredientes disponíveis:", error.response?.data || error.message);
+            toast.error("Erro ao procurar ingredientes disponíveis:", error.response?.data || error.message);
           }
         }
 
@@ -125,14 +126,16 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
               );
                 toast.success("Ingrediente removido com sucesso");
               } catch (error) {
-                toast.error("Erro ao deletar ingrediente da receita.");
+                toast.error(`Erro ao deletar ingrediente da receita: ${error}`);
               }
             };
           
             deletando();
           };
 
-      const handleAlterar = async () => {
+      const handleAlterar = async (e) => {
+        e.preventDefault();
+
         const ingredientesTransformados = ingredientesSelecionados.map((ingrediente) => ({
           ID_INGREDIENTE: parseInt(ingrediente.ID_INGREDIENTE, 10),
           PROPORCAO_INGREDIENTE: parseFloat(ingrediente.PROPORCAO_INGREDIENTE),
@@ -140,7 +143,7 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
         }));
         const receitaAtualizada = {
           NOME: novasInformacoes.nome,
-          QNT_PADRAO: novasInformacoes.rendimento,
+          QNT_PADRAO: parseFloat(novasInformacoes.rendimento),
           Ingredientes_receita: [...novasProporcoes, ...ingredientesTransformados],
         };
       
@@ -148,6 +151,7 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
           const response = await axios.put(`http://localhost:3000/receitas/${receita.ID}`, receitaAtualizada);
       
           if (response.status === 200) {
+            fecharModal();
             console.log('Receita atualizada com sucesso:', response.data);
             toast.success('Receita atualizada com sucesso!');
           }
@@ -185,9 +189,9 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
                     )}
                     {(valorReceita > 0 || CMV > 0 || valorVenda > 0) && (
                     <div className="flex flex-col sm:flex-row gap-2 justify-between my-3 w-full">
-                    <p className="text-xs bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor Receita: {valorReceita}</p>
-                    <p className="text-xs bg-[var(--color-dark-green)] p-[3px] w-[30%] rounded text-[#F4F1E1]">CMV: {CMV}</p>
-                    <p className="text-xs bg-[var(--color-dark-green)] p-[3px] rounded text-[#F4F1E1]">Valor de Venda: {valorVenda}</p>
+                    <p className="bg-[var(--color-dark-green)] text-[#F4F1E1] rounded text-xs p-[3px] md:w-1/3">Valor Receita: {valorReceita}</p>
+                    <p className="bg-[var(--color-dark-green)] text-[#F4F1E1] rounded text-xs  p-[3px] md:w-1/3">CMV: {CMV}</p>
+                    <p className="bg-[var(--color-dark-green)] text-[#F4F1E1] rounded text-xs  p-[3px] md:w-1/3">Valor de Venda: {valorVenda}</p>
                     </div>)}
                       <CalculadoraReceita 
                       receita={receita}
@@ -205,7 +209,7 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
                           <h1 className="text-2xl pb-4">Editar Receita</h1>
                           <form onSubmit={handleAlterar} className="flex flex-col gap-2 ">
                               <label>Nome:</label>
-                              <input type="text" className="border border-[var(--color-dark-green)] rounded" name="nome" value={novasInformacoes.nome} onChange={handleChangeNovasInformacoes}/>
+                              <input type="text" className="border border-[var(--color-dark-green)] rounded text-md" name="nome" value={novasInformacoes.nome} onChange={handleChangeNovasInformacoes}/>
 
                               <ul>
                                 {ingredientesReceita?.map((ingrediente) => (
@@ -271,7 +275,7 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
 
                               <label>Rendimento(g):</label>
                               <input type="number" step="0.01" name="rendimento" value={novasInformacoes.rendimento} onChange={handleChangeNovasInformacoes} className="border border-[var(--color-dark-green)] rounded
-                              [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                              [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-md" />
 
                               <button type="submit" className="p-2 border border-[var(--color-dark-green)] cursor-pointer rounded
                             hover:bg-[var(--color-dark-green)] hover:text-[#F4F1E1] active:bg-[var(--color-hunter-green)]">Salvar</button>

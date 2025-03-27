@@ -13,7 +13,7 @@ export default function PaginaCadastrar({usuario}) {
     return (
         <div className="conteudo">
             {paginaAtiva === "ingrediente" ? (
-                <CadastroIngredientes alternarComponente={alternarComponente} />
+                <CadastroIngredientes alternarComponente={alternarComponente} usuario={usuario}/>
             ) : (
                 <CadastroReceitas alternarComponente={alternarComponente} usuario={usuario}/>
             )}

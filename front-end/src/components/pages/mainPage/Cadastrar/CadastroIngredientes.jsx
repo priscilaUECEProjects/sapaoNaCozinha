@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function CadastroIngredientes({ alternarComponente }) {
+export default function CadastroIngredientes({ alternarComponente, usuario }) {
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
     const [gramatura, setGramatura] = useState("");
@@ -25,8 +25,9 @@ export default function CadastroIngredientes({ alternarComponente }) {
         }
 
         try{
-            await axios.post("http://localhost:3000/INGREDIENTES", { nome, preco: precoNumber, gramatura: gramaturaNumber });
+            await axios.post("http://localhost:3000/INGREDIENTES/criar", {nome, preco: precoNumber, gramatura: gramaturaNumber, ID_USUARIO: usuario.EMAIL });
             toast.success("Ingrediente cadastrado com sucesso!");
+            window.location.reload();
         } catch (error){
             toast.error("Erro ao cadastrar novo ingrediente: " + (error.response?.data?.error || "Erro desconhecido"));
         }
@@ -37,16 +38,16 @@ export default function CadastroIngredientes({ alternarComponente }) {
                 <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center gap-8 lg:w-2/8 px-2 py-4 sm:p-4 bg-[var(--color-pearl)] rounded shadow-[-10px_-10px_30px_4px,_10px_10px_30px_4px] text-[#55133b]">
 
                     <label htmlFor="nome-ingrediente" className="font-bold text-2xl">Nome do ingrediente:</label>
-                    <input type="text" id="nome-ingrediente" name="nome-ingrediente" className="border border-[#55133b] text-md h-10 rounded w-full" 
+                    <input type="text" id="nome-ingrediente" name="nome-ingrediente" className="border border-[#55133b] text-md rounded w-full" 
                     onChange={(event) => setNome(event.target.value)} value={nome}/>                    
 
                     <label htmlFor="preco-ingrediente" className="font-bold text-2xl">Preço:</label>
-                    <input type="number" id="preco-ingrediente" name="preco-ingrediente" step="0.01" className="border border-[#55133b] text-md h-10 rounded w-full
+                    <input type="number" id="preco-ingrediente" name="preco-ingrediente" step="0.01" className="border border-[#55133b] text-md rounded w-full
                     [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                     onChange={(event) => setPreco(event.target.value)} value={preco}/>
 
                     <label htmlFor="gramatura-ingrediente" className="font-bold text-2xl">Gramatura:</label>
-                    <input type="number" id="gramatura-ingrediente" name="gramatura-ingrediente" step="0.01" className="border border-[#55133b] text-md h-10 rounded w-full
+                    <input type="number" id="gramatura-ingrediente" name="gramatura-ingrediente" step="0.01" className="border border-[#55133b] text-md rounded w-full
                     [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                     onChange={(event) => setGramatura(event.target.value)} value={gramatura}/>
 
