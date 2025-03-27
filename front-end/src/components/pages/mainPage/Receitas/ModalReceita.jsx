@@ -140,7 +140,7 @@ export default function ModalReceita({ setReceitas, fecharModal, receita, usuari
         }));
         const receitaAtualizada = {
           NOME: novasInformacoes.nome,
-          QNT_PADRAO: novasInformacoes.rendimento,
+          QNT_PADRAO: parseFloat(novasInformacoes.rendimento),
           Ingredientes_receita: [...novasProporcoes, ...ingredientesTransformados],
         };
       

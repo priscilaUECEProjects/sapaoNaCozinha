@@ -25,8 +25,9 @@ export default function CadastroIngredientes({ alternarComponente, usuario }) {
         }
 
         try{
-            await axios.post("http://localhost:3000/INGREDIENTES", { nome, preco: precoNumber, gramatura: gramaturaNumber, ID_USUARIO: usuario.EMAIL });
+            await axios.post("http://localhost:3000/INGREDIENTES/criar", {nome, preco: precoNumber, gramatura: gramaturaNumber, ID_USUARIO: usuario.EMAIL });
             toast.success("Ingrediente cadastrado com sucesso!");
+            window.location.reload();
         } catch (error){
             toast.error("Erro ao cadastrar novo ingrediente: " + (error.response?.data?.error || "Erro desconhecido"));
         }

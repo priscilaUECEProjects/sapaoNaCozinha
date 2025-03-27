@@ -54,7 +54,7 @@ export default function MainPage() {
                     <CardsReceitas usuario={usuario} />
                 </Element>
                 <Element name='ingredientes' className='min-h-screen'>
-                    <CardsIngredientes />
+                    <CardsIngredientes usuario={usuario} />
                 </Element>
 
                 <Footer/>
