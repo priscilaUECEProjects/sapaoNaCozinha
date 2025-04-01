@@ -30,25 +30,30 @@ git clone https://github.com/seu-usuario/sapao-na-cozinha.git
 2️⃣ **Acesse o diretório do projeto:**  
   ```sh
   cd sapao-na-cozinha
+```
 
 3️⃣ **Instale as dependências:**  
   ```sh
   npm install
+```
 
 4️⃣ **Configure o banco de dados:**  
   Crie um arquivo `.env` na raiz do projeto e adicione as configurações do seu PostgreSQL:
   ```env
   DATABASE_URL=postgresql://usuario:senha@localhost:5432/seu_banco
+```
 
 5️⃣ **Inicie o servidor back-end:**  
   ```sh
   npm run dev
+```
 
 6️⃣ **Acesse o front-end e inicie o projeto:**  
   ```sh
   cd frontend
   npm install
   npm run dev
+```
 
 O projeto estará rodando em http://localhost:5173 🚀
 
