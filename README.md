@@ -25,7 +25,7 @@ Antes de começar, certifique-se de ter instalado: **Node.js**, **PostgreSQL** e
 
 1️⃣ **Clone o repositório:**  
 ```sh
-git clone https://github.com/seu-usuario/sapao-na-cozinha.git
+git clone https://github.com/priscilaUECEProjects/sapaoNaCozinha.git
 
 2️⃣ **Acesse o diretório do projeto:**  
   ```sh
